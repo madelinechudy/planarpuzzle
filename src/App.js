@@ -15,10 +15,7 @@ function App() {
   const appRef = React.useRef(null);    //need to be able to refer to App
   const canvasRef = React.useRef(null); //need to be able to refer to Canvas
 
-  // Ensures initial rendering is performed, and that whenever model changes it is re-rendered
   React.useEffect(() => {
-
-    //Happens once
     redrawCanvas(model, canvasRef.current, appRef.current);
   }, [model]) //second argument is critical, declares when to refresh
 
