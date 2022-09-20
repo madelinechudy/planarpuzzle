@@ -6,9 +6,10 @@ var BOXSIZE = 100;
 
 //Representing Rectangles (Squares)
 export class Rectangle {
-    constructor(x, y) {
+    constructor(x, y, color) {
         this.x = x;
         this.y = y;
+        this.color = color
         this.width = 100;
         this.height = 100;
     }
@@ -16,8 +17,7 @@ export class Rectangle {
 
 //Map piece into rectangle in puzzle view
 export function computeSquare(square) {
-    //let c = square.baseSquares();
-    return new Rectangle(BOXSIZE*square.column, BOXSIZE*square.row);
+    return new Rectangle(BOXSIZE*square.column, BOXSIZE*square.row, square.color);
 }
 
 //Draw board
@@ -32,7 +32,7 @@ export function drawBoard (ctx, model, showLabels) {
         if (square === selected) {
             ctx.fillStyle = 'yellow';}
         else {
-            ctx.fillStle = square.color;
+            ctx.fillStyle = square.color;
         }
 
     ctx.shadowBlur = 10;
@@ -52,10 +52,12 @@ export function redrawCanvas(model, canvasObj, appObj) {
     //clear canvas area before rendering the coordinates held in state
     ctx.clearRect(0,0, canvasObj.width, canvasObj.height);
 
+
+    //space for board
     let nr = model.board.numRows;
     let nc = model.board.numColumns;
 
-    //ctx.fillStyle = 'yellow';
+    //ctx.fillStyle = 'white';
     //ctx.fillRect(0,0,100*nc,100*nr);
 
     if(model) {

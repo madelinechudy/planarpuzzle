@@ -29,12 +29,36 @@ export default class Model {
     initialize(info) { 
         let numRows = parseInt(info.numRows);
         let numColumns = parseInt(info.numColumns);
-        let squareinfo = parseInt(info.baseSquares); //this is wrong, need a way to place base squares
         
         var allSquares = [];
         for(let s of info.baseSquares) {
             allSquares.push(new Square(parseInt(s.row), parseInt(s.column), s.color, 0, true, false));
         }
+        for(let s of info.unusedSquares) {
+            allSquares.push(new Square(parseInt(s.row), parseInt(s.column), 'black', null, false, true));
+        }
+        
+        var i = 0
+        var j = 0
+        while(i < numRows){
+            while(j < numColumns) {
+                if(i == allSquares.row && j == allSquares.column) {
+                    j = j+1;
+                }
+                else {
+                    allSquares.push(new Square(i, j, 'white', null, false, false));
+                    j = j+1;
+                }
+            }
+            i = i+1;
+        }
+        
+        
+        //white, if there is not a Square object in the position, create a blank square
+        //for(let s of info.baseSquares) {
+
+        //}
+        //allSquares.push(new Square(s.row, s.column, 'white', null, false, false));
 
         this.board = new Board(numRows, numColumns);
         this.squares = allSquares;

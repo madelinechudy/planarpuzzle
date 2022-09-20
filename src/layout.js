@@ -13,7 +13,7 @@ export const layout = {
     text: {
         position: "absolute",
         left: 50,
-        top: 400,
+        top: 600,
         color: "yellow",
         backgroundColor: "#320453",
         width: 80,
@@ -22,7 +22,7 @@ export const layout = {
     buttons: {
         position: "absolute",
         left: 600,
-        top: 90,
+        top: 10,
     },
 
     upbutton: {
