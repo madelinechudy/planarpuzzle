@@ -38,28 +38,29 @@ export default class Model {
             allSquares.push(new Square(parseInt(s.row), parseInt(s.column), 'black', null, false, true));
         }
         
-        var i = 0
-        var j = 0
-        while(i < numRows){
-            while(j < numColumns) {
-                if(i == allSquares.row && j == allSquares.column) {
-                    j = j+1;
+        //white squares
+        var rowIterator = 0
+        var columnIterator = 0
+        while(rowIterator < numRows){
+            while(columnIterator < numColumns) {
+
+                var foundSquare = false;
+
+                for(let x in allSquares) {
+                    if(x.row == rowIterator && x.column == columnIterator) {
+                        foundSquare = true;
+                        break;
+                    }
                 }
-                else {
-                    allSquares.push(new Square(i, j, 'white', null, false, false));
-                    j = j+1;
+                if (foundSquare == false) {
+                    allSquares.push(new Square(rowIterator, columnIterator, 'white', null, false, false));
                 }
+                columnIterator += 1;
             }
-            i = i+1;
+            rowIterator += 1;
         }
         
-        
-        //white, if there is not a Square object in the position, create a blank square
-        //for(let s of info.baseSquares) {
-
-        //}
-        //allSquares.push(new Square(s.row, s.column, 'white', null, false, false));
-
+   
         this.board = new Board(numRows, numColumns);
         this.squares = allSquares;
         this.victory = false;
