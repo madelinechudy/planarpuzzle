@@ -7,16 +7,19 @@ export class Square {
         this.base = base;
         this.unusable = unusable;
     }
+
 }
 
 export class Board { 
     constructor(numRows, numColumns) { 
         this.numRows = numRows;
         this.numColumns = numColumns;
-        this.selected = null;
-        this.squares = [];
+        this.selected = false;
+        //this.squares = [];
     }
+
 }
+
 
 export default class Model { 
     constructor(info) { 
@@ -28,9 +31,16 @@ export default class Model {
         let numColumns = parseInt(info.numColumns);
         let squareinfo = parseInt(info.baseSquares); //this is wrong, need a way to place base squares
         
-        //figure out how to parse square info
+        var allSquares = [];
+        for(let s of info.baseSquares) {
+            allSquares.push(new Square(parseInt(s.row), parseInt(s.column), s.color, 0, true, false));
+        }
+
         this.board = new Board(numRows, numColumns);
+        this.squares = allSquares;
         this.victory = false;
+
+        this.showlabels = false;
     }
 }
 
@@ -41,7 +51,7 @@ export class moveDirection {
     }
 }
 
-export const Down = new moveDirection(1, 0, 'down');
-export const Up = new moveDirection(-1, 0, 'up');
-export const Left = new moveDirection(0, -1, 'left');
-export const Right = new moveDirection(0, 1, 'right');
+export const Down = new moveDirection(1, 0);
+export const Up = new moveDirection(-1, 0);
+export const Left = new moveDirection(0, -1);
+export const Right = new moveDirection(0, 1);

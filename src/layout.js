@@ -22,7 +22,7 @@ export const layout = {
     buttons: {
         position: "absolute",
         left: 600,
-        top: 90
+        top: 90,
     },
 
     upbutton: {
