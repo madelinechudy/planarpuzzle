@@ -9,5 +9,5 @@ export function redrawCanvas(model, canvasObj, appObj) {
     let nc = model.board.numColumns;
 
     ctx.fillStyle = 'yellow';
-    ctx.fillRect(0,0,10*nc,10*nr);
+    ctx.fillRect(0,0,200*nc,150*nr);
 }

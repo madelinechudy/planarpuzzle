@@ -26,7 +26,7 @@ export default class Model {
     initialize(info) { 
         let numRows = parseInt(info.numRows);
         let numColumns = parseInt(info.numColumns);
-        let squareinfo = parseInt(info.board.squares); //this is wrong, need a way to place base squares
+        let squareinfo = parseInt(info.baseSquares); //this is wrong, need a way to place base squares
         
         //figure out how to parse square info
         this.board = new Board(numRows, numColumns);

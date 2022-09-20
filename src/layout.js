@@ -12,8 +12,8 @@ export const layout = {
 
     text: {
         position: "absolute",
-        left: 400,
-        top: 100,
+        left: 50,
+        top: 400,
         color: "yellow",
         backgroundColor: "#320453",
         width: 80,
@@ -21,7 +21,36 @@ export const layout = {
 
     buttons: {
         position: "absolute",
-        left: 350,
+        left: 600,
         top: 90
     },
+
+    upbutton: {
+        position: "absolute",
+        left: 50,
+        top: 80,
+    },
+
+    downbutton: {
+        position: "absolute",
+        left: 50,
+        top: 120,
+    },
+
+    leftbutton: {
+        position: "absolute",
+        top: 100,
+    },
+
+    rightbutton: {
+        position: "absolute",
+        top: 100,
+        left: 100,
+    },
+
+    resetbutton: {
+        position: "absolute",
+        left: 40,
+        top: 40,
+    }
 }

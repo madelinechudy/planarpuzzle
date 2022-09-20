@@ -30,9 +30,13 @@ function App() {
         width={layout.canvas.width}
         height={layout.canvas.height}
         />
-        <label style={layout.text}>number moves: </label>
+        <label style={layout.text}>Congratulations!!! </label>
         <div style={layout.buttons}>
-        <button style={layout.upbutton}>^</button>
+          <button style={layout.resetbutton}>Reset</button>
+          <button style={layout.upbutton}>^</button>
+          <button style={layout.leftbutton}>&lt;</button>
+          <button style={layout.rightbutton}>&gt;</button>
+          <button style={layout.downbutton}>v</button>
         </div>
     </main>
   );
