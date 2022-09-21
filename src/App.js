@@ -19,8 +19,6 @@ function App() {
     redrawCanvas(model, canvasRef.current, appRef.current);
   }, [model]) //second argument is critical, declares when to refresh
 
-
-
   
   return (
     <main style={layout.Appmain} ref={appRef}>

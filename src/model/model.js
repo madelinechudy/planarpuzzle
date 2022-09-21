@@ -40,14 +40,16 @@ export default class Model {
         
         //white squares
         var rowIterator = 0
-        var columnIterator = 0
         while(rowIterator < numRows){
+            
+            var columnIterator = 0
             while(columnIterator < numColumns) {
 
                 var foundSquare = false;
 
-                for(let x in allSquares) {
-                    if(x.row == rowIterator && x.column == columnIterator) {
+                for(let ite in allSquares) {
+                    var obj = allSquares[ite]
+                    if(obj.row == rowIterator && obj.column == columnIterator) {
                         foundSquare = true;
                         break;
                     }
@@ -55,9 +57,9 @@ export default class Model {
                 if (foundSquare == false) {
                     allSquares.push(new Square(rowIterator, columnIterator, 'white', null, false, false));
                 }
-                columnIterator += 1;
+                columnIterator = columnIterator + 1;
             }
-            rowIterator += 1;
+            rowIterator = rowIterator + 1;
         }
         
    

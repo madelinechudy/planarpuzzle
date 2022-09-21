@@ -1,8 +1,9 @@
 import { Square } from "../model/model";
 
+
 //Scaling constants for canvas
 var BOXSIZE = 100;
-//const OFFSET = 8;
+const OFFSET = 8;
 
 //Representing Rectangles (Squares)
 export class Rectangle {
@@ -10,19 +11,21 @@ export class Rectangle {
         this.x = x;
         this.y = y;
         this.color = color
-        this.width = 100;
-        this.height = 100;
+        this.width = 100 - OFFSET;
+        this.height = 100 - OFFSET;
     }
 }
 
 //Map piece into rectangle in puzzle view
 export function computeSquare(square) {
-    return new Rectangle(BOXSIZE*square.column, BOXSIZE*square.row, square.color);
+    return new Rectangle(BOXSIZE*square.column + OFFSET, BOXSIZE*square.row + OFFSET, square.color);
 }
 
 //Draw board
 export function drawBoard (ctx, model, showLabels) {
     ctx.shaddowColor = 'black';
+    //BasicStroke bs = new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10, fa, 10);
+    //g2d.setStroke(bs);
 
     let selected = model.board.selected;
 
@@ -51,14 +54,6 @@ export function redrawCanvas(model, canvasObj, appObj) {
 
     //clear canvas area before rendering the coordinates held in state
     ctx.clearRect(0,0, canvasObj.width, canvasObj.height);
-
-
-    //space for board
-    let nr = model.board.numRows;
-    let nc = model.board.numColumns;
-
-    //ctx.fillStyle = 'white';
-    //ctx.fillRect(0,0,100*nc,100*nr);
 
     if(model) {
         drawBoard (ctx, model, model.showLabels);
