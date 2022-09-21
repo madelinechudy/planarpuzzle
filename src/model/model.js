@@ -117,6 +117,7 @@ export class moveDirection {
         this.deltar = deltar;
         this.deltac = deltac;
     }
+    
     static parse(s) {
         if ((s === "down")  || (s === "Down"))   { return Down; }
         if ((s === "up")    || (s === "Up"))     { return Up; }

@@ -30,7 +30,7 @@ function App() {
     let newModel = moveColor(model, direction);
     setModel(newModel);   //react to changes, if model has changed
   }
-
+//
   return (
     <main style={layout.Appmain} ref={appRef}>
       <canvas tabIndex="1"
