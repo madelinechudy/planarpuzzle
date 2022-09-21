@@ -6,6 +6,7 @@ import Model from './model/model.js';
 import { redrawCanvas } from './boundary/boundary.js';
 import { configuration_1 } from './model/puzzle.js';
 import { selectSquare } from './controller/controller.js';
+import { Up, Down, Left, Right } from './model/model.js';
 
 var actualPuzzle = JSON.parse(JSON.stringify(configuration_1)); //parses strings into JSON objects
 
@@ -25,6 +26,11 @@ function App() {
     setModel(newModel); //react to changes, if model has changed
   }
   
+  const extendColorHandler = (direction) => {
+    let newModel = moveColor(model, direction);
+    setModel(newModel);   //react to changes, if model has changed
+  }
+
   return (
     <main style={layout.Appmain} ref={appRef}>
       <canvas tabIndex="1"
@@ -37,10 +43,10 @@ function App() {
         <label style={layout.text}>Congratulations!!! </label>
         <div style={layout.buttons}>
           <button style={layout.resetbutton}>Reset</button>
-          <button style={layout.upbutton}>^</button>
-          <button style={layout.leftbutton}>&lt;</button>
-          <button style={layout.rightbutton}>&gt;</button>
-          <button style={layout.downbutton}>v</button>
+          <button style={layout.upbutton} onClick={(e) => extendColorHandler(Up)} disabled={!model.available(Up)}>^</button>
+          <button style={layout.leftbutton} onClick={(e) => extendColorHandler(Left)} disabled={!model.available(Left)}>&lt;</button>
+          <button style={layout.rightbutton} onClick={(e) => extendColorHandler(Right)} disabled={!model.available(Right)}>&gt;</button>
+          <button style={layout.downbutton} onClick={(e) => extendColorHandler(Down)} disabled={!model.available(Down)}>v</button>
         </div>
     </main>
   );

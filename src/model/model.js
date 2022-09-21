@@ -19,7 +19,7 @@ export class Board {
     constructor(numRows, numColumns) { 
         this.numRows = numRows;
         this.numColumns = numColumns;
-        this.selected = false;
+        this.selected = null;
     }
 
     initialize(squares) {
@@ -28,6 +28,7 @@ export class Board {
 
     select(square) {
         this.selected = square;
+        //square.selected = true;
     }
 
     isSelected(square) {
@@ -95,7 +96,6 @@ export default class Model {
    
         this.board = new Board(numRows, numColumns);
         this.board.initialize(allSquares);
-        this.squares = allSquares;
         this.victory = false;
 
         this.showlabels = false;
@@ -116,6 +116,12 @@ export class moveDirection {
     constructor(deltar, deltac) { 
         this.deltar = deltar;
         this.deltac = deltac;
+    }
+    static parse(s) {
+        if ((s === "down")  || (s === "Down"))   { return Down; }
+        if ((s === "up")    || (s === "Up"))     { return Up; }
+        if ((s === "left")  || (s === "Left"))   { return Left; }
+        if ((s === "right") || (s === "Right"))  { return Right; }
     }
 }
 

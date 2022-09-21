@@ -29,17 +29,21 @@ export function computeSquare(square) {
 //Draw board
 export function drawBoard (ctx, model, showLabels) {
     ctx.shaddowColor = 'black';
+    
 
     let selected = model.board.selected;
 
-    model.squares.forEach(square => {
+    model.board.squares.forEach(square => {
         let rect = computeSquare(square);
 
-        if (rect === selected) {
+        if(selected == null) {
+            ctx.fillStyle = square.color;}
+
+        else if (square == selected) {
             ctx.fillStyle = 'yellow';}
+
         else {
-            ctx.fillStyle = square.color;
-        }
+            ctx.fillStyle = square.color;}
 
     ctx.shadowBlur = 10;
     ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
