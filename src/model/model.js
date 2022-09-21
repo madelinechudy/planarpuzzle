@@ -7,7 +7,12 @@ export class Square {
         this.base = base;
         this.unusable = unusable;
     }
-
+    
+    // used for solving
+    copy() {
+        let s = new Square(this.row, this.column, this.color, this.moveNum, this.base, this.unusable);
+        return s;
+    }
 }
 
 export class Board { 
@@ -15,7 +20,31 @@ export class Board {
         this.numRows = numRows;
         this.numColumns = numColumns;
         this.selected = false;
-        //this.squares = [];
+    }
+
+    initialize(squares) {
+        this.squares = squares.map(s => s.copy());
+    }
+
+    select(square) {
+        this.selected = square;
+    }
+
+    isSelected(square) {
+        return square === this.selected;
+    }
+
+    clone() {
+        let copy = new Board(this.numRows, this.numColumns);
+        copy.squares = []; 
+        for (let s of this.squares) {
+            let dup = s.copy();
+            copy.squares.push(dup);
+            if(s === this.selected) {
+                copy.selected = dup;
+            }
+        }
+        return copy;
     }
 
 }
@@ -24,6 +53,7 @@ export class Board {
 export default class Model { 
     constructor(info) { 
         this.initialize(info);
+        this.info = info;
     }
 
     initialize(info) { 
@@ -64,11 +94,22 @@ export default class Model {
         
    
         this.board = new Board(numRows, numColumns);
+        this.board.initialize(allSquares);
         this.squares = allSquares;
         this.victory = false;
 
         this.showlabels = false;
     }
+
+    copy() {
+        let m = new Model(this.info);
+        m.board = this.board.clone();
+        m.numMoves = this.numMoves;
+        m.showLabels = this.showLabels;
+        m.victory = this.victory;
+        return m;
+    }
+
 }
 
 export class moveDirection { 

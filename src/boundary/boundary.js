@@ -14,7 +14,12 @@ export class Rectangle {
         this.width = 100 - OFFSET;
         this.height = 100 - OFFSET;
     }
+
+    contains(x, y) {
+        return x >= this.x && x <= (this.x + this.width) && y >= this.y && y <= (this.y + this.height);
+    }
 }
+
 
 //Map piece into rectangle in puzzle view
 export function computeSquare(square) {
@@ -24,15 +29,13 @@ export function computeSquare(square) {
 //Draw board
 export function drawBoard (ctx, model, showLabels) {
     ctx.shaddowColor = 'black';
-    //BasicStroke bs = new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10, fa, 10);
-    //g2d.setStroke(bs);
 
     let selected = model.board.selected;
 
     model.squares.forEach(square => {
         let rect = computeSquare(square);
 
-        if (square === selected) {
+        if (rect === selected) {
             ctx.fillStyle = 'yellow';}
         else {
             ctx.fillStyle = square.color;
