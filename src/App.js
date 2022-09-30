@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { layout } from './layout.js'; 
 import Model from './model/model.js';
 import { redrawCanvas } from './boundary/boundary.js';
 import { configuration_1 } from './model/puzzle.js';
-import { selectSquare } from './controller/controller.js';
+import { selectSquare, extendColor } from './controller/controller.js';
 import { Up, Down, Left, Right } from './model/model.js';
 
 var actualPuzzle = JSON.parse(JSON.stringify(configuration_1)); //parses strings into JSON objects
@@ -27,10 +26,10 @@ function App() {
   }
   
   const extendColorHandler = (direction) => {
-    let newModel = moveColor(model, direction);
+    let newModel = extendColor(model, direction);
     setModel(newModel);   //react to changes, if model has changed
   }
-//
+
   return (
     <main style={layout.Appmain} ref={appRef}>
       <canvas tabIndex="1"

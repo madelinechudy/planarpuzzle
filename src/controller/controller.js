@@ -18,3 +18,12 @@ export function selectSquare(model, canvas, event) {
     model.board.select(selected);
     return model.copy();
 }
+
+export function extendColor(model, direction) {
+    let selected = model.board.selected;
+    if (!selected) { return model; }
+
+    selected.extend(direction); // move color, not direction 
+    //model.updateMoveNum() //have to update the moveNum to one more than the selected piece, not allowing from unused squares
+    return model.copy();
+}
