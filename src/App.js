@@ -39,7 +39,7 @@ function App() {
         height={layout.canvas.height}
         onClick={handleClick}
         />
-        <label style={layout.text}>Congratulations!!! </label>
+        <label style={layout.text}>Congratulations!!!</label>
         <div style={layout.buttons}>
           <button style={layout.resetbutton}>Reset</button>
           <button style={layout.upbutton} onClick={(e) => extendColorHandler(Up)} disabled={!model.available(Up)}>^</button>

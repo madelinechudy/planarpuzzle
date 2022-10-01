@@ -14,18 +14,10 @@ export class Square {
         return s;
     }
 
-    //NEW, changing the color of the neighbor
-    extend(direction) {
-        for (let ite in Model.allSquares) {
-            var s = Model.allSquares[ite];
-            let newrow = Board.selected + direction.deltar;
-            let newcol = Board.selected + direction.deltac;
-            
-            if (s.row == newrow && s.column == newcol && s in Board.neighbors) {
-                s.color.set(Board.selected.color);
-            }
-        }
+    setColor(color) {
+        this.color = color;
     }
+
 }
 
 export class Board { 
@@ -48,60 +40,58 @@ export class Board {
         return square === this.selected;
     }
 
-    // NEW
     //given a square, you can see if it is already colored
     isColored(square) { 
         let isColored = false;
         if (square.color != 'white') {
-            return isColored = true;
+            isColored = true;
         }
+        return isColored;
     }
 
-    //NEW
     neighbors(square) { 
         // push squares with columns the same as board.selected.column +- 1 and board.selected.row +- 1
         let neighbors = [null, null, null, null];
         let right = square.column + 1;
         let left = square.column - 1;
-        let up = square.row + 1;
-        let down = square.row - 1;
+        let up = square.row - 1;
+        let down = square.row + 1;
         
-        for (let ite in Model.allSquares) {
-            var s = Model.allSquares[ite];
-            if (s in neighbors) { break; } //avoid double counting
-            if (s.column = right) {
-                neighbors.set(0, s);
-                break;
+        for (let ite in this.squares) {
+            var s = this.squares[ite];
+            if (s in neighbors) { continue; } //avoid double counting
+            if (s.column == right && s.row == this.selected.row) { //right neighbor
+                neighbors[0] = s;
+                continue;
             }
-            if (s.column = left) {
-                neighbors.set(1, s);
-                break;
+            if (s.column == left && s.row == this.selected.row) { //left neighbor
+                neighbors[1] = s;
+                continue;
             }
-            if (s.row = up) {
-                neighbors.set(2, s);
-                break;
+            if (s.row == up && s.column == this.selected.column) { //up neighbor
+                neighbors[2] = s;
+                continue;
             }
-            if (s.row = down) { 
-                neighbors.set(3, s);
-                break;
+            if (s.row == down && s.column == this.selected.column) { //down neighbor
+                neighbors[3] = s;
+                continue;
             }
-            else { break; } //do i need?
         }
+        return neighbors; 
     }
-
-    //NEW
+    
     availableMoves() { 
         let s = this.selected;
-        if (s == null) { return []; }
-
         let moves = [];
-        let neighbors = neighbors(s);
+        let neighbors = this.neighbors(s);
+
+        if (s == null) { return []; }
 
         //can move right? 
         let available = false;
-        if (s.column > 0) {
+        if (s.column < this.numColumns - 1 && neighbors[0] != null) {
             available = true; 
-            if (neighbors[0].isColored()) { // does the isColored need param
+            if (this.isColored(neighbors[0])) { // does the isColored need param
                 available = false;
             }
         }
@@ -111,9 +101,9 @@ export class Board {
         
         //can move left? 
         available = false;
-        if (s.column > 0) {
+        if (s.column > 0 && neighbors[1] != null) {
             available = true; 
-            if (neighbors[1].isColored()) { // does the isColored need param
+            if (this.isColored(neighbors[1])) { // does the isColored need param
                 available = false;
             }
         }
@@ -123,9 +113,9 @@ export class Board {
         
         //can move up? 
         available = false;
-        if (s.column > 0) {
+        if (s.row > 0 && neighbors[2] != null) {
             available = true; 
-            if (neighbors[2].isColored()) { // does the isColored need param
+            if (this.isColored(neighbors[2])) { // does the isColored need param
                 available = false;
             }
         }
@@ -135,9 +125,9 @@ export class Board {
 
         //can move down? 
         available = false;
-        if (s.column > 0) {
+        if (s.row < this.numRows - 1 && neighbors[3] != null) {
             available = true; 
-            if (neighbors[3].isColored()) { // does the isColored need param
+            if (this.isColored(neighbors[3])) { // does the isColored need param
                 available = false;
             }
         }
@@ -147,6 +137,20 @@ export class Board {
 
         return moves;
     }
+        
+    //NEW, changing the color of the neighbor
+    extend(direction) {
+        for (let ite in this.squares) {
+            var s = this.squares[ite];
+            let newrow = this.selected.row + direction.deltar;
+            let newcol = this.selected.column + direction.deltac;
+                
+            if (s.row == newrow && s.column == newcol) {
+                s.setColor(this.selected.color);
+            }
+        }
+    }
+    
 
     clone() {
         let copy = new Board(this.numRows, this.numColumns);
@@ -222,6 +226,7 @@ export default class Model {
         // if no piece selected, then none are available.
         if (!this.board.selected) { return false; }
         if (direction == NoMove) { return false; }
+        if (this.board.selected.color == 'white' || this.board.selected.color == 'black') { return false;}
 
         let allMoves = this.board.availableMoves(); //get available moves for a selected square
         return allMoves.includes(direction);
