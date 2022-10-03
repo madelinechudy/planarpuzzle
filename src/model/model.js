@@ -18,6 +18,16 @@ export class Square {
         this.color = color;
     }
 
+    //used for finding end of planar path
+    //getMoveNum(square) { 
+    //    let moveNum = square.moveNum;
+    //    return moveNum;
+    //}
+
+    setmoveNum(number) {
+        this.moveNum = number;
+    }
+
 }
 
 export class Board { 
@@ -33,7 +43,6 @@ export class Board {
 
     select(square) {
         this.selected = square;
-        //square.selected = true;
     }
 
     isSelected(square) {
@@ -60,19 +69,19 @@ export class Board {
         for (let ite in this.squares) {
             var s = this.squares[ite];
             if (s in neighbors) { continue; } //avoid double counting
-            if (s.column == right && s.row == this.selected.row) { //right neighbor
+            if (s.column == right && s.row == square.row) { //right neighbor
                 neighbors[0] = s;
                 continue;
             }
-            if (s.column == left && s.row == this.selected.row) { //left neighbor
+            if (s.column == left && s.row == square.row) { //left neighbor
                 neighbors[1] = s;
                 continue;
             }
-            if (s.row == up && s.column == this.selected.column) { //up neighbor
+            if (s.row == up && s.column == square.column) { //up neighbor
                 neighbors[2] = s;
                 continue;
             }
-            if (s.row == down && s.column == this.selected.column) { //down neighbor
+            if (s.row == down && s.column == square.column) { //down neighbor
                 neighbors[3] = s;
                 continue;
             }
@@ -138,8 +147,34 @@ export class Board {
         return moves;
     }
         
-    //NEW, changing the color of the neighbor
+    sameColor(color) {
+        let colorcheck = color;
+        let samecolor = [];
+        for (let ite in this.squares) {
+            var s = this.squares[ite];
+            if (s.color == colorcheck) {
+                samecolor.push(s);
+            }
+        }
+        return samecolor;
+    }
+
+    // trying to see if the selected square has the highest moveNum of all squares of the same color -- making sure its at the end of the path
+    isEnd() {
+        let isEnd = true;
+        let samecolor = this.sameColor(this.selected.color);
+        for (let ite in samecolor) {
+            var s = samecolor[ite];
+            if (s.moveNum > this.selected.moveNum) {
+                isEnd = false;
+            }
+        }
+        return isEnd;
+    }
+    
+    //changing the color of the neighbor
     extend(direction) {
+        
         for (let ite in this.squares) {
             var s = this.squares[ite];
             let newrow = this.selected.row + direction.deltar;
@@ -147,11 +182,14 @@ export class Board {
                 
             if (s.row == newrow && s.column == newcol) {
                 s.setColor(this.selected.color);
-            }
+                s.setmoveNum(this.selected.moveNum + 1);
+            } 
+        }
+        if (this.selected.base == true) {  // setting initial base moveNum to -100, so now we know the highest moveNum (end of path) should be next to base with moveNum of 0
+            this.selected.setmoveNum(-100);
         }
     }
     
-
     clone() {
         let copy = new Board(this.numRows, this.numColumns);
         copy.squares = []; 
@@ -218,18 +256,66 @@ export default class Model {
         this.showlabels = false;
     }
 
-    //updateMoveNum(square) { 
-        //// take the move number displayed on the square where extending from and add one
-   // }
-
     available(direction) { 
         // if no piece selected, then none are available.
         if (!this.board.selected) { return false; }
         if (direction == NoMove) { return false; }
         if (this.board.selected.color == 'white' || this.board.selected.color == 'black') { return false;}
+        if (this.board.isEnd() == false) { return false; }
 
         let allMoves = this.board.availableMoves(); //get available moves for a selected square
         return allMoves.includes(direction);
+    }
+
+    win() {     //if the base squares are next to a square with the highest moveNum, if highest moveNum is in neighbors of base
+        let victory = false;
+        let track = [];
+        let i = 0;
+        for (let ite in this.board.squares) {
+            var s = this.board.squares[ite];
+            if (s.color === "white") {
+                return false;
+            }
+            if (s.moveNum == 0) {
+                let neighbors = this.board.neighbors(s);
+                let samecolor = this.board.sameColor(s.color);
+                let x = samecolor.map(s => s.moveNum)
+                let maxMove = Math.max.apply(null, x);
+                
+                for (let index in samecolor) {
+                    var p = samecolor[index];
+                    if (p.moveNum == maxMove && neighbors.indexOf(p) >= 0) {
+                        track.push(true);
+                        break;
+                    }
+                }
+                i = i + 1;
+            }
+        }
+        if (track.length == i) {
+            victory = true;
+            return victory;
+        }
+    }
+
+    victorious() {
+        this.victory = true;
+    }
+
+    notvictorious() {
+        this.victory = false;
+    }
+
+    isVictorious() {
+        return this.victory;
+    }
+
+    configAvailable(confignumber) {
+        let available = true;
+        if (confignumber == this.info.name) {
+            available = false;
+        }
+        return available;
     }
 
     copy() {
@@ -263,4 +349,4 @@ export const Down = new moveDirection(1, 0);
 export const Up = new moveDirection(-1, 0);
 export const Left = new moveDirection(0, -1);
 export const Right = new moveDirection(0, 1);
-export const NoMove = new moveDirection(0, 0);  // no move is possible
+export const NoMove = new moveDirection(0, 0); 

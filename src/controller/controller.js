@@ -1,4 +1,5 @@
 import { computeSquare } from '../boundary/boundary.js';
+import Model from '../model/model.js';
 
 export function selectSquare(model, canvas, event) {
     const canvasRect = canvas.getBoundingClientRect();
@@ -21,9 +22,18 @@ export function selectSquare(model, canvas, event) {
 
 export function extendColor(model, direction) {
     let selected = model.board.selected;
-    if (!selected) { return model; }
+    if (!selected) { return model; } //redundant?
 
-    selected.extend(direction); // move color, not direction 
-    //model.updateMoveNum() //have to update the moveNum to one more than the selected piece, not allowing from unused squares
+    model.board.extend(direction); 
+    if(model.win()) {
+        model.victorious();
+    }
+    else { model.notvictorious()}
     return model.copy();
 }
+
+export function handlereset(info) {
+    let resetModel = new Model(info);
+    return resetModel;
+}
+

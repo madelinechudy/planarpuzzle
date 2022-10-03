@@ -1,7 +1,7 @@
 export const layout = {
     canvas : {
-        height: "500",
-        width: "500",
+        height: "1000",
+        width: "1000",
     },
 
     Appmain : {
@@ -10,19 +10,9 @@ export const layout = {
         width: "100vw",
     },
 
-    text: {
-        position: "absolute",
-        left: 600,
-        top: 200,
-        color: "yellow",
-        backgroundColor: "#320453",
-        width: 80,
-        visibility: "hidden",
-    },
-
     buttons: {
         position: "absolute",
-        left: 600,
+        left: 1000,
         top: 10,
     },
 
@@ -53,5 +43,35 @@ export const layout = {
         position: "absolute",
         left: 40,
         top: 40,
+    },
+    
+    config1: {
+        position: "absolute",
+        left: 0,
+        top: 200,
+        width: 125,
+    },
+
+    config2: {
+        position: "absolute",
+        left: 0,
+        top: 250,
+        width: 125,
+    },
+
+    config3: {
+        position: "absolute",
+        left: 0,
+        top: 300,
+        width: 125,
+    },
+
+    victory: {
+        position: "absolute",
+        left: 1020,
+        top: 175,
+        color: "yellow",
+        backgroundColor: "#320453",
+        width: 100,
     }
 }

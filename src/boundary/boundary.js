@@ -30,7 +30,6 @@ export function computeSquare(square) {
 export function drawBoard (ctx, model, showLabels) {
     ctx.shaddowColor = 'black';
     
-
     let selected = model.board.selected;
 
     model.board.squares.forEach(square => {
