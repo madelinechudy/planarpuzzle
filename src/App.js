@@ -12,7 +12,6 @@ var actualPuzzle = JSON.parse(JSON.stringify(configuration_1)); //parses strings
 
 function App() {
 
-
   //initial instantiation of Model
   const [model, setModel] = React.useState(new Model(actualPuzzle));
   

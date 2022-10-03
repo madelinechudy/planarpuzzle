@@ -1,5 +1,3 @@
-import { Square } from "../model/model";
-
 
 //Scaling constants for canvas
 var BOXSIZE = 100;
@@ -20,7 +18,6 @@ export class Rectangle {
     }
 }
 
-
 //Map piece into rectangle in puzzle view
 export function computeSquare(square) {
     return new Rectangle(BOXSIZE*square.column + OFFSET, BOXSIZE*square.row + OFFSET, square.color);
@@ -34,21 +31,46 @@ export function drawBoard (ctx, model, showLabels) {
 
     model.board.squares.forEach(square => {
         let rect = computeSquare(square);
-
+        
         if(selected == null) {
-            ctx.fillStyle = square.color;}
+            ctx.fillStyle = square.color;
+            }
 
-        else if (square == selected) {
-            ctx.fillStyle = 'yellow';}
+        if (square == selected) {
+            ctx.fillStyle = '#808080';}
 
         else {
             ctx.fillStyle = square.color;}
 
-    ctx.shadowBlur = 10;
-    ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        ctx.shadowBlur = 10;
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+
+        //displaying colors and moveNums
+        if (square.base) {
+            if (square.color === "red") {
+                ctx.font = "20px Georgia";
+                ctx.strokeText(square.color, rect.x+30, 50+rect.y);
+            }
+
+            else {
+                ctx.font = "20px Georgia";
+                ctx.strokeText(square.color, rect.x+20, 50+rect.y);
+            }
+            
+        }
+        if (square.base == false) {
+            if (square.moveNum == null) { 
+                ctx.font = "20px Georgia";
+                ctx.strokeText('', rect.x+40, 50+rect.y);
+            }
+            else {
+                ctx.font = "20px Georgia";
+                ctx.strokeText(square.moveNum, rect.x+40, 50+rect.y);
+            } 
+        }
+    
     })
 }
-
 
 //Redraw entire canvas from model
 export function redrawCanvas(model, canvasObj, appObj) {

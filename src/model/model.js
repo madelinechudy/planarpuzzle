@@ -18,16 +18,9 @@ export class Square {
         this.color = color;
     }
 
-    //used for finding end of planar path
-    //getMoveNum(square) { 
-    //    let moveNum = square.moveNum;
-    //    return moveNum;
-    //}
-
     setmoveNum(number) {
         this.moveNum = number;
     }
-
 }
 
 export class Board { 
