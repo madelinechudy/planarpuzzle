@@ -28,7 +28,6 @@ export function extendColor(model, direction) {
     if(model.win()) {
         model.victorious();
     }
-    else { model.notvictorious()}
     return model.copy();
 }
 

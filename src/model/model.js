@@ -295,10 +295,6 @@ export default class Model {
         this.victory = true;
     }
 
-    notvictorious() {
-        this.victory = false;
-    }
-
     isVictorious() {
         return this.victory;
     }
@@ -326,15 +322,6 @@ export class moveDirection {
     constructor(deltar, deltac) { 
         this.deltar = deltar;
         this.deltac = deltac;
-    }
-    
-    static parse(s) {
-        if ((s === "down")  || (s === "Down"))   { return Down; }
-        if ((s === "up")    || (s === "Up"))     { return Up; }
-        if ((s === "left")  || (s === "Left"))   { return Left; }
-        if ((s === "right") || (s === "Right"))  { return Right; }
-
-        return NoMove;
     }
 }
 
