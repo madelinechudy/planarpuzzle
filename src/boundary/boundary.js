@@ -36,7 +36,7 @@ export function drawBoard (ctx, model, showLabels) {
             ctx.fillStyle = square.color;
             }
 
-        if (square == selected) {
+        if (square === selected) {
             ctx.fillStyle = '#808080';}
 
         else {
@@ -58,7 +58,7 @@ export function drawBoard (ctx, model, showLabels) {
             }
             
         }
-        if (square.base == false) {
+        if (square.base === false) {
             if (square.moveNum == null) { 
                 ctx.font = "20px Georgia";
                 ctx.strokeText('', rect.x+40, 50+rect.y);

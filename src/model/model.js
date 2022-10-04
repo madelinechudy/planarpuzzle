@@ -45,7 +45,7 @@ export class Board {
     //given a square, you can see if it is already colored
     isColored(square) { 
         let isColored = false;
-        if (square.color != 'white') {
+        if (square.color !== 'white') {
             isColored = true;
         }
         return isColored;
@@ -62,19 +62,19 @@ export class Board {
         for (let ite in this.squares) {
             var s = this.squares[ite];
             if (s in neighbors) { continue; } //avoid double counting
-            if (s.column == right && s.row == square.row) { //right neighbor
+            if (s.column === right && s.row === square.row) { //right neighbor
                 neighbors[0] = s;
                 continue;
             }
-            if (s.column == left && s.row == square.row) { //left neighbor
+            if (s.column === left && s.row === square.row) { //left neighbor
                 neighbors[1] = s;
                 continue;
             }
-            if (s.row == up && s.column == square.column) { //up neighbor
+            if (s.row === up && s.column === square.column) { //up neighbor
                 neighbors[2] = s;
                 continue;
             }
-            if (s.row == down && s.column == square.column) { //down neighbor
+            if (s.row === down && s.column === square.column) { //down neighbor
                 neighbors[3] = s;
                 continue;
             }
@@ -145,7 +145,7 @@ export class Board {
         let samecolor = [];
         for (let ite in this.squares) {
             var s = this.squares[ite];
-            if (s.color == colorcheck) {
+            if (s.color === colorcheck) {
                 samecolor.push(s);
             }
         }
@@ -173,12 +173,12 @@ export class Board {
             let newrow = this.selected.row + direction.deltar;
             let newcol = this.selected.column + direction.deltac;
                 
-            if (s.row == newrow && s.column == newcol) {
+            if (s.row === newrow && s.column === newcol) {
                 s.setColor(this.selected.color);
                 s.setmoveNum(this.selected.moveNum + 1);
             } 
         }
-        if (this.selected.base == true) {  // setting initial base moveNum to -100, so now we know the highest moveNum (end of path) should be next to base with moveNum of 0
+        if (this.selected.base === true) {  // setting initial base moveNum to -100, so now we know the highest moveNum (end of path) should be next to base with moveNum of 0
             this.selected.setmoveNum(-100);
         }
     }
@@ -228,12 +228,12 @@ export default class Model {
 
                 for(let ite in allSquares) {
                     var obj = allSquares[ite]
-                    if(obj.row == rowIterator && obj.column == columnIterator) {
+                    if(obj.row === rowIterator && obj.column === columnIterator) {
                         foundSquare = true;
                         break;
                     }
                 }
-                if (foundSquare == false) {
+                if (foundSquare === false) {
                     allSquares.push(new Square(rowIterator, columnIterator, 'white', null, false, false));
                 }
                 columnIterator = columnIterator + 1;
@@ -252,9 +252,9 @@ export default class Model {
     available(direction) { 
         // if no piece selected, then none are available.
         if (!this.board.selected) { return false; }
-        if (direction == NoMove) { return false; }
-        if (this.board.selected.color == 'white' || this.board.selected.color == 'black') { return false;}
-        if (this.board.isEnd() == false) { return false; }
+        if (direction === NoMove) { return false; }
+        if (this.board.selected.color === 'white' || this.board.selected.color === 'black') { return false;}
+        if (this.board.isEnd() === false) { return false; }
 
         let allMoves = this.board.availableMoves(); //get available moves for a selected square
         return allMoves.includes(direction);
@@ -269,7 +269,7 @@ export default class Model {
             if (s.color === "white") {
                 return false;
             }
-            if (s.moveNum == 0) {
+            if (s.moveNum === 0) {
                 let neighbors = this.board.neighbors(s);
                 let samecolor = this.board.sameColor(s.color);
                 let x = samecolor.map(s => s.moveNum)
@@ -277,7 +277,7 @@ export default class Model {
                 
                 for (let index in samecolor) {
                     var p = samecolor[index];
-                    if (p.moveNum == maxMove && neighbors.indexOf(p) >= 0) {
+                    if (p.moveNum === maxMove && neighbors.indexOf(p) >= 0) {
                         track.push(true);
                         break;
                     }
@@ -285,7 +285,7 @@ export default class Model {
                 i = i + 1;
             }
         }
-        if (track.length == i) {
+        if (track.length === i) {
             victory = true;
             return victory;
         }
@@ -301,7 +301,7 @@ export default class Model {
 
     configAvailable(confignumber) {
         let available = true;
-        if (confignumber == this.info.name) {
+        if (confignumber === this.info.name) {
             available = false;
         }
         return available;
