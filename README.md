@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Getting Started with Planar Puzzle App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In order to select a square, click on it. The selected square will turn light grey. Once a square is selected, the arrows on the right will become enabled based on the moves available to the user. Click the arrow corresponding with the direction you decide to move and the respective square will be colored with the selected square's color. Then, select a new square to extend another color. You cannot extend from unused squares (black squares), so the arrows will be disabled when these squares are selected. You have to select a base square to extend from first. Click the reset button to clear the board, and the "Configuration 2" and "Configuration 3" buttons to switch to harder boards. A message revealing "You've Won!" will appear when you have solved the board. Good luck!
 
 ## Available Scripts
 
